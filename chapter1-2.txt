@@ -1,0 +1,87 @@
+## Chapter 1 PHP overview
+# PHPの環境作成
+    バージョン
+    . PHP 7.2.13
+    . mysql 5.6
+
+    今回は簡単に、以下のコマンドでPHPとmysqlの環境を作成
+    php -S localhost:8000
+    mysql.server start
+
+# mysqlの基本的操作
+    サーバー立ち上げ
+    mysql.server start
+    (mysql.server restartで再起動)
+
+    終了方法
+    mysql.server stop
+
+    mysqlに接続・接続解除
+    mysql -uroot (ユーザーを作成して、接続する方法もある)
+    exit
+
+    DB操作
+    show databases;
+    use {db_name};
+    create database {db_bame};
+    drop database {db_name};
+
+    テーブル操作
+    show tables;
+    show table status;
+    あるテーブルのインデックスを確認
+    show index form {table_name};
+
+## Chapter 2 PHPの言語仕様
+# 以下のコマンドは、laravelのdd()に相当？
+    var_dump("hogehoge");
+    exit;
+
+# isset() is_null() empty()それぞれの仕様
+    参考
+    PHP isset, empty, is_null の違い早見表: https://qiita.com/shinichi-takii/items/00aed26f96cf6bb3fe62
+    isset, empty, is_null の動作まとめ: https://qiita.com/mpyw/items/51bf42fe1ad8a7e535aa
+
+    # 空値とundefinedの扱い
+        数値の0, 文字列の0, 空文字"", 空配列[] or array(), false, null、
+        SimpleXMLElement（<-なんだこれは？？)
+        false == 0, true == 1 は真。　=== が型まで完全一致。　　== は型の相互変換をすれば一致するならtrue
+        以上のものは、空値と呼ばれ,条件文では全てfalseと評価される。
+
+        未定義の変数はundefinedと表示されるがnullとして扱われる。つまり、条件文ではnull。
+
+    # isset()
+        undefined, nullでfalseになり、そのほかはtrueになる。
+        変数のみを受け付けるらしい
+    
+    # empty()
+        0(数字、文字), null, undefined, array(), [], falseでtrue、そのほかはfalseになる。
+    
+    # is_null 
+        isset()の反対と考えられる？
+        null, undefinedでtrueにその他はfalseになる。
+
+# スコープについて
+    # グローバルスコープ
+    # ブロックスコープ
+    # ローカルグロープ
+
+# グローバル変数（特にスーパーグローバル変数について）
+
+# 定数定義
+    # define()とconstについて
+
+    # 定数をグローバルスコープで使いたいなら、定数ファイルを作成し、そこで管理するのがよいかも。
+
+# マジック定数について
+
+# エラーが出た時考えること
+    1. どういうエラーが表示されているかエラーを読む。
+        PHPでは大きく、文法エラー（Parse error）、プログラムのエラー(Fatal error)がある。
+        とりあえずこれと、何行目かを把握すればタイポや簡単なプログラムのミスなら見つけられるだろう。
+
+    2. その部分におかしなところがなければ、エラーをさらに読んだり、var_dump();exit;で問題点を絞っていく。
+
+    3. 検索？
+
+    4. 人に聞く、今は諦める
