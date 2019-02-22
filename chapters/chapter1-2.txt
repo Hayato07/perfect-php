@@ -1,5 +1,5 @@
-## Chapter 1 PHP overview
-# PHPの環境作成
+# Chapter 1 PHP overview
+## PHPの環境作成
     バージョン
     . PHP 7.2.13
     . mysql 5.6
@@ -8,7 +8,7 @@
     php -S localhost:8000
     mysql.server start
 
-# mysqlの基本的操作
+## mysqlの基本的操作
     サーバー立ち上げ
     mysql.server start
     (mysql.server restartで再起動)
@@ -32,12 +32,12 @@
     あるテーブルのインデックスを確認
     show index form {table_name};
 
-## Chapter 2 PHPの言語仕様
-# 以下のコマンドは、laravelのdd()に相当？
+# Chapter 2 PHPの言語仕様
+## 以下のコマンドは、laravelのdd()に相当？
     var_dump("hogehoge");
     exit;
 
-# isset() is_null() empty()それぞれの仕様
+## isset() is_null() empty()それぞれの仕様
     参考
     PHP isset, empty, is_null の違い早見表: https://qiita.com/shinichi-takii/items/00aed26f96cf6bb3fe62
     isset, empty, is_null の動作まとめ: https://qiita.com/mpyw/items/51bf42fe1ad8a7e535aa
@@ -61,21 +61,21 @@
         isset()の反対と考えられる？
         null, undefinedでtrueにその他はfalseになる。
 
-# スコープについて
+## スコープについて
     # グローバルスコープ
     # ブロックスコープ
     # ローカルグロープ
 
-# グローバル変数（特にスーパーグローバル変数について）
+## グローバル変数（特にスーパーグローバル変数について）
 
-# 定数定義
+## 定数定義
     # define()とconstについて
 
     # 定数をグローバルスコープで使いたいなら、定数ファイルを作成し、そこで管理するのがよいかも。
 
-# マジック定数について
+## マジック定数について
 
-# エラーが出た時考えること
+## エラーが出た時考えること
     1. どういうエラーが表示されているかエラーを読む。
         PHPでは大きく、文法エラー（Parse error）、プログラムのエラー(Fatal error)がある。
         とりあえずこれと、何行目かを把握すればタイポや簡単なプログラムのミスなら見つけられるだろう。
