@@ -1,0 +1,149 @@
+# Chapter 5 クラスとオブジェクト
+## アクセス修飾子
+  # public ・・・クラスの外部からも参照、呼び出し可
+    private ・・・クラス内部のみ参照、呼び出し可
+    protected ・・・クラス内部＋継承したクラスの内部のみ参照、呼び出し可
+  
+  # プロパティ　・・・オブジェクトが保有する変数
+  カプセル化の考えからすると、直接プロパティがいじれるのはよくないらしい。（要学習）
+  可読性という点から、プロパティはクラス定義時に定義しておくのがよい。
+  （インスタンスで新たな変数を定義することができるが、この変数何者？状態になるのでできる限りやめとくこと）
+
+  そこでアクセス修飾子でアクセス制限をかけ、参照や変更のできるメソッドを作成し、
+  そこからプロパティを操作する。
+
+  class Test {
+    const INTRO = "はじめまして,わたしは"; // クラスの初期化時に用いられる設定のフラグや、オプションを定数で記述するのが主。
+
+    private $name = 'hayato';
+
+    public function getName() {
+      return $this->name; 
+    }
+    public function setName(string $name) {
+      $this->name = $name;
+    }
+  }
+  $test = new Test();
+
+  echo $test->name; // error
+  echo $test->getName();  // hayato
+  $test->setName('haya');
+  echo $test->getName(); // haya
+
+  # staticなプロパティ
+    クラス共通の変数と考えればよい。インスタンスごとに変数が作られるのではなく、
+    クラスを用いるもの全てが共有する変数。
+    singletonパターン（一つのクラスに一つのインスタンス）でインスタンスを保持するために使ったりするらしい。
+    （singletonは、状態を持たない＝＞様々なインスタンスを作る必要がない場合、に利用するもの）
+  
+  
+  # コンストラクタ（インスタンス生成時）とデストラクタ（インスタンス消滅時）
+  public function __construct () {}
+  public function __destruct () {}
+
+  # 継承,　オーバーライド, final（つけたメソッドはオーバーライドできなくなる）
+  class MiniTest extends Test {
+    private $type;
+    public function __construct($name, $type) {
+      self::$name = $name;
+      self::$type = $type;
+    }
+
+    public function getType (){
+      return self::$type;
+    }
+  }
+
+
+  # 抽象クラス　（使いどころがまだわかっていない。）
+  共通な機能を抽象的な親クラスで定義しておき、実装は子クラスで行う。
+  abstract class Subject {
+    abstract public function learn();
+  }
+
+  class Math extends Subject {
+    public function learn();
+  }
+
+  # インターフェイス
+  特定のクラスが特定の機能（メソッド）を持つことを保証する機能。
+  インターフェイスを継承しているクラスは、インターフェイスに定義されているメソッドを実装しないとエラーになる。
+  PHPは動的型付けの言語なので、引数の型が保証されておらず、インターフェイスの引数に渡す型を保証しないと誤った処理を
+  行う可能性がある。＝＞タイプヒンティング！(型演算子を用いる方法もあるが、タイプヒンティングで良いかと。)
+
+  interface Reader {
+    public function read();
+  }
+
+  interface Writer {
+    public function Writer(string $value);
+  }
+
+  class Config implements Reader, Writer {
+    public function write($value) {
+      // 書き込み処理
+    }
+
+    public function read() {
+      // 読み込み処理
+    }
+  }
+
+  # マジックメソッド
+  __construct, __destructなど特定の条件で自動的に呼び出されるメソッドのこと。（他にもいくつかある）
+
+  # オーバーロード
+  デフォルトの挙動を上書きする機能。マジックメソッドを用いる。
+
+  # オートロード
+  クラスを必要な時に読み込む仕組み。Composerのautoload.phpもこれなのか？
+
+
+  # 例外
+  function div (int $a,int $b) {
+    if ($b === 0) {
+      throw new Exception ("$b is zero.");
+    }
+    return $a / $b;
+  }
+
+  try {
+    echo div(3, 4);
+    echo div(2,3);
+    echo div(2,0);
+    echo div(4, 2);
+  } catch (Exception $e) {
+    echo $e->getMessage();
+  }
+
+  # コピーと参照
+  $a = 10;
+  $b = $a;
+  $c = &$a;
+
+  $b += 2; // $a = 10;
+  $c += 2; // $a = 12;
+
+
+  function array_pass_ref (&$array) {
+    foreach ($array as $key => $value) {
+      $array[$key]  = $value * 2;
+    }
+  }
+
+  $a = 10;
+  $b = 2;
+
+  $array = [$a, $b];
+  array_pass_ref($array); // $a = 10; $b = 2; $array = [20, 4];
+  参照元はあくまで$arrayであり、$arrayは$a, $bをコピーしているのでこの結果になる。
+
+  # オブジェクト, 変数の寿命
+  インスタンス化されたオブジェクトはいつ消滅するのか。
+  ＝＞オブジェクト作成時に、作成されたオブジェクト数がカウントされている。（リファレンスカウント、現在は循環参照を考慮した新たな破棄方法がある。)
+  このカウント数が０になった時オブジェクトは消滅する。unset()を利用しない限りは、プログラム終了時にオブジェクトは消滅する。
+
+  変数の場合もリファレンスカウントが行われている。
+  $a = $b; // この時点では参照渡し。これによりリソースを節約している。
+  $b += 2; このときようやく、コピーされ、足し算が行われる。
