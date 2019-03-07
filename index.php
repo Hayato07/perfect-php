@@ -123,3 +123,30 @@
   // var_dump($array);
 
   // echo gc_enabled();
+
+
+// お遊び　３つの演算子の違い
+// null合体演算子はnullかどうかが重要
+// 三項演算子、エルビスは、true,falseが重要
+// $x = null;
+// $y = 0;
+// $z = 1;
+
+// // 三項演算子
+// $a = $x ? 'true' : 'false'; // 'false'
+// $b = $y ? 'true' : 'false'; // 'false'
+// $c = $z ? 'true' : 'false'; // 'true'
+// // $abc = $xyz ? 'true' : 'false';
+// echo $a . $b . $c  . '<br>';
+// // null合体演算子
+// $a = $x ?? 'false'; // 'false'
+// $b = $y ?? 'false'; // 'false'
+// $c = $z ?? 'false'; // 1
+// $abc = $xyz ?? 'false';
+// echo $a . $b . $c . $abc . '<br>';
+// // エルビス演算子
+// $a = $x ?: 'false'; // 
+// $b = $y ?: 'false'; // 'false'
+// $c = $z ?: 'false'; // 1
+// // $abc = $xyz ?: 'false';
+// echo $a . $b . $c . '<br>';
