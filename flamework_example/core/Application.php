@@ -92,7 +92,7 @@ abstract class Application
   public function run()
   {
     try {
-      $params = $this->router->resolve($this->request->gtPathInfo());
+      $params = $this->router->resolve($this->request->getPathInfo());
       if ($params == false) {
         throw new HttpNotFoundException('No route found for' .$this->request->getPAthInfo());
       }
