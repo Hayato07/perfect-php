@@ -150,3 +150,5 @@
 // $c = $z ?: 'false'; // 1
 // // $abc = $xyz ?: 'false';
 // echo $a . $b . $c . '<br>';
+
+require 'bootstrap.php';
