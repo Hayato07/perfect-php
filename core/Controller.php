@@ -36,8 +36,7 @@ abstract class Controller
       throw new UnauthorizedActionException();
     }
 
-    $content = $this->action_method($params);
-
+    $content = $this->$action_method($params);
     return $content;
   }
 
@@ -94,12 +93,12 @@ abstract class Controller
   {
     $key = 'csrf_tokens/' . $form_name;
     $tokens = $this->session->get($key, []);
-    if (count($token) >= 10) {
+    if (count($tokens) >= 10) {
       array_shift($tokens);
     }
 
     $token = sha1($form_name . session_id() . microtime());
-    $tokens = $token;
+    $tokens[] = $token;
 
     $this->session->set($key, $tokens);
 
@@ -108,13 +107,13 @@ abstract class Controller
 
   protected function checkCsrfToken($form_name, $token)
   {
-    $key = 'csrf_token' . $form_name;
+    $key = 'csrf_tokens/' . $form_name;
     $tokens = $this->session->get($key, []);
     
     $pos = array_search($token, $tokens, true);
     if ($pos !== false) {
-      unset($token[$pos]);
-      $This->session->set($key, $tokens);
+      unset($tokens[$pos]);
+      $this->session->set($key, $tokens);
 
       return true;
     }

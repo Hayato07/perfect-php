@@ -7,6 +7,7 @@ abstract class Application
   protected $response;
   protected $session;
   protected $db_manager;
+  protected $login_action = [];
 
   public function __construct($debug = false)
   {
@@ -79,7 +80,7 @@ abstract class Application
     return $this->getRootDir() . '/views';
   }
 
-  public function getModeDir()
+  public function getModelDir()
   {
     return $this->getRootDir() . '/models';
   }
@@ -93,7 +94,7 @@ abstract class Application
   {
     try {
       $params = $this->router->resolve($this->request->getPathInfo());
-      if ($params == false) {
+      if ($params === false) {
         throw new HttpNotFoundException('No route found for' .$this->request->getPAthInfo());
       }
 
@@ -117,7 +118,7 @@ abstract class Application
     $controller_class = ucfirst($controller_name) . 'Controller';
 
     $controller = $this->findController($controller_class);
-    if ($controller == false) {
+    if ($controller === false) {
       throw new HttpNotFoundException($controller_class . 'controller is not found');
     }
 

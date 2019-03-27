@@ -33,7 +33,7 @@ class Session
     unset($_SESSION[$name]);
   }
 
-  public function clean()
+  public function clear()
   {
     $_SESSION = [];
   }

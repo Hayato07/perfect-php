@@ -17,14 +17,14 @@ class Router
       $tokens = explode('/', ltrim($url, '/'));
       foreach ($tokens as $i => $token) {
         if (strpos($token, ':') === 0) {
-          $name = substr($token, ':');
+          $name = substr($token, 1);
           $token = '(?P<' . $name . '>[^/]+)';
         }
         $tokens[$i] = $token;
       }
 
       $pattern = '/' . implode('/', $tokens);
-      $routes[$pattern] = $param;
+      $routes[$pattern] = $params;
     }
 
     return $routes;
