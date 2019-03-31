@@ -11,6 +11,18 @@
     <h1><a href="<?php echo $base_url; ?>/">Mini Blog</a></h1>
   </div>
 
+  <div id="nav">
+    <p>
+      <?php if ($session->isAuthenticated()): ?>
+        <a href="<?php echo $base_url; ?>/">ホームへ</a>
+        <a href="<?php echo $base_url; ?>/account">アカウント</a>
+      <?php else: ?>
+        <a href="<?= $base_url;?>/account/signin"> ろぐいん</a>
+        <a href="<?= $base_url; ?>/account/signup">アカウント登録</a>
+      <?php endif; ?>
+    </p>
+  </div>
+
   <div id="main">
     <?php echo $_content; ?>
   </div>
