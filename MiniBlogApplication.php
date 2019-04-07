@@ -18,6 +18,7 @@ class MiniBlogApplication extends Application
       '/user/:user_name/status/:id' => ['controller' => 'status', 'action' => 'show'],
       '/account' => ['controller' => 'account', 'action' => 'index'],
       '/account/:action' => ['controller' => 'account'],
+       '/follow' => ['controller' => 'account', 'action' => 'follow'],
     ];
   }
 

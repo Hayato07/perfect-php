@@ -7,3 +7,18 @@
     <?php echo $this->render('status/status', ['status' => $status]); ?>
   <?php endforeach; ?>
 </div>
+
+<h2><?= $this->escape($user['user_name']); ?></h2>
+
+<?php if (!is_null($following)): ?>
+  <?php if ($following): ?>
+    <p>ふぉろーしています</p>
+  <?php else: ?>
+    <form action="<?= $base_url; ?>/follow" method="post">
+      <input type="hidden" name="_token" value="<?= $this->escape($_token); ?>">
+      <input type="hidden" name="following_name" value="<?= $this->escape($user['user_name']); ?>">
+
+      <input type="submit" value="ふぉろーする">
+    </form>
+  <?php endif; ?>
+<?php endif; ?>
